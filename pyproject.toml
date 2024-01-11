@@ -1,0 +1,135 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "eip712-structs-ng"
+description = "A Python library for EIP712 objects."
+readme = "README.md"
+requires-python = ">= 3.8"
+authors = [
+  { name = "AJ Grubbs" },
+  { name = "Mickaël Schoentgen", email="contact@tiger-222.fr" },
+]
+maintainers = [
+  { name = "Mickaël Schoentgen", email="contact@tiger-222.fr" },
+]
+license = { file = "LICENSE" }
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Intended Audience :: Developers",
+  "Intended Audience :: Information Technology",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: Implementation :: CPython",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+]
+keywords = [
+    "ethereum",
+    "eip712",
+    "solidity",
+]
+dynamic = ["version"]
+dependencies = [
+    "eth-utils>=2.3.1,<3",
+]
+
+[project.urls]
+Homepage = "https://github.com/BoboTiG/py-eip712-structs-ng"
+Documentation = "https://github.com/BoboTiG/py-eip712-structs-ng/blob/main/API.md"
+Changelog = "https://github.com/BoboTiG/py-eip712-structs-ng/blob/main/CHANGELOG.md"
+Source = "https://github.com/BoboTiG/py-eip712-structs-ng"
+Tracker = "https://github.com/BoboTiG/py-eip712-structs-ng/issues"
+"Released Versions" = "https://github.com/BoboTiG/py-eip712-structs-ng/releases"
+
+[project.optional-dependencies]
+tests = [
+  "eth-tester==0.10.0b1",
+  "mypy",
+  "py-evm==0.8.0b1",
+  "py-solc-x==2.0.2",
+  "pytest",
+  "pytest-cov",
+  "requests",
+  "ruff",
+  "web3>=6.3.0,<7",
+]
+dev = [
+  "build",
+  "twine",
+]
+
+[tool.hatch.version]
+path = "src/eip712_structs/__init__.py"
+
+[tool.hatch.build]
+skip-excluded-dirs = true
+
+[tool.hatch.build.targets.sdist]
+only-include = [
+  "src",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = [
+  "src/eip712_structs",
+]
+
+[tool.mypy]
+# Ensure we know what we do
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_unused_configs = true
+
+# Imports management
+ignore_missing_imports = true
+follow_imports = "skip"
+
+# Ensure full coverage
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+disallow_untyped_calls = true
+
+# Restrict dynamic typing (a little)
+# e.g. `x: List[Any]` or x: List`
+# disallow_any_generics = true
+
+strict_equality = true
+
+[tool.pytest.ini_options]
+pythonpath = "src"
+addopts = """
+  --showlocals
+  --strict-markers
+  -r fE
+  -vvv
+  --cov=src/eip712_structs
+  --cov-report=term-missing:skip-covered
+"""
+
+[tool.ruff]
+exclude = [
+    ".git",
+    ".mypy_cache",
+    ".pytest_cache",
+    ".ruff_cache",
+    "venv",
+]
+line-length = 120
+indent-width = 4
+target-version = "py38"
+
+[tool.ruff.lint]
+extend-select = ["I"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"

@@ -5,7 +5,7 @@ def test_empty_struct():
     class Empty(EIP712Struct):
         pass
 
-    assert Empty.encode_type() == 'Empty()'
+    assert Empty.encode_type() == "Empty()"
 
 
 def test_simple_struct():
@@ -15,7 +15,7 @@ def test_simple_struct():
         numbers = Array(Int(256))
         moreNumbers = Array(Uint(256), 8)
 
-    expected_result = 'Person(string name,address addr,int256[] numbers,uint256[8] moreNumbers)'
+    expected_result = "Person(string name,address addr,int256[] numbers,uint256[8] moreNumbers)"
     assert Person.encode_type() == expected_result
 
 
@@ -29,7 +29,7 @@ def test_struct_with_reference():
         dest = Person
         content = String()
 
-    expected_result = 'Mail(Person source,Person dest,string content)Person(string name,address addr)'
+    expected_result = "Mail(Person source,Person dest,string content)Person(string name,address addr)"
     assert Mail.encode_type() == expected_result
 
 
@@ -39,7 +39,7 @@ def test_self_reference():
 
     Person.parent = Person
 
-    expected_result = 'Person(string name,Person parent)'
+    expected_result = "Person(string name,Person parent)"
     assert Person.encode_type() == expected_result
 
 
@@ -55,7 +55,7 @@ def test_nested_reference():
         s = String()
         b = B
 
-    expected_result = 'A(string s,B b)B(string s,C c)C(string s)'
+    expected_result = "A(string s,B b)B(string s,C c)C(string s)"
     assert A.encode_type() == expected_result
 
 
@@ -72,14 +72,14 @@ def test_reference_ordering():
         s = String()
         c = C
 
-    expected_result = 'A(string s,C c)B(string s)C(string s,B b)'
+    expected_result = "A(string s,C c)B(string s)C(string s,B b)"
     assert A.encode_type() == expected_result
 
     class Z(EIP712Struct):
         s = String()
         a = A
 
-    expected_result = 'Z(string s,A a)' + expected_result
+    expected_result = "Z(string s,A a)" + expected_result
     assert Z.encode_type() == expected_result
 
 
@@ -96,13 +96,13 @@ def test_circular_reference():
 
     C.a = A
 
-    a_sig = 'A(B b)'
-    b_sig = 'B(C c)'
-    c_sig = 'C(A a)'
+    a_sig = "A(B b)"
+    b_sig = "B(C c)"
+    c_sig = "C(A a)"
 
-    expected_result_a = f'{a_sig}{b_sig}{c_sig}'
-    expected_result_b = f'{b_sig}{a_sig}{c_sig}'
-    expected_result_c = f'{c_sig}{a_sig}{b_sig}'
+    expected_result_a = f"{a_sig}{b_sig}{c_sig}"
+    expected_result_b = f"{b_sig}{a_sig}{c_sig}"
+    expected_result_c = f"{c_sig}{a_sig}{b_sig}"
 
     assert A.encode_type() == expected_result_a
     assert B.encode_type() == expected_result_b

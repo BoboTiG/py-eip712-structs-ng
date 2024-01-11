@@ -1,8 +1,10 @@
-.eggs/
-*.egg-info/
-dist/
-build/
-.pytest_cache/
+# Files
 .coverage
 
-tests/contracts/build
+# Folders
+dist/
+.mypy_cache/
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+venv/

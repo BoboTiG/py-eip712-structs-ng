@@ -1,56 +1,10 @@
 import os
-import pytest
 
-from requests.exceptions import ConnectionError
-from web3 import HTTPProvider, Web3
-
-from eip712_structs import EIP712Struct, String, Uint, Int, Address, Boolean, Bytes, Array
+from eip712_structs import Address, Array, Boolean, Bytes, EIP712Struct, Int, String, Uint
+from web3 import Web3
 
 
-@pytest.fixture(scope='module')
-def w3():
-    """Provide a Web3 client to interact with a local chain."""
-    client = Web3(HTTPProvider('http://localhost:8545'))
-    client.eth.defaultAccount = client.eth.accounts[0]
-    return client
-
-
-@pytest.fixture(scope='module')
-def contract(w3):
-    """Deploys the test contract to the local chain, and returns a Web3.py Contract to interact with it.
-
-    Note this expects the contract to be compiled already.
-    This project's docker-compose config pulls a solc container to do this for you.
-    """
-    base_path = 'tests/contracts/build/TestContract'
-    with open(f'{base_path}.abi', 'r') as f:
-        abi = f.read()
-    with open(f'{base_path}.bin', 'r') as f:
-        bytecode = f.read()
-
-    tmp_contract = w3.eth.contract(abi=abi, bytecode=bytecode)
-    deploy_hash = tmp_contract.constructor().transact()
-    deploy_receipt = w3.eth.waitForTransactionReceipt(deploy_hash)
-
-    deployed_contract = w3.eth.contract(abi=abi, address=deploy_receipt.contractAddress)
-    return deployed_contract
-
-
-def skip_this_module():
-    """If we can't reach a local chain, then all tests in this module are skipped."""
-    client = Web3(HTTPProvider('http://localhost:8545'))
-    try:
-        client.eth.accounts
-    except ConnectionError:
-        return True
-    return False
-
-
-# Implicitly adds this ``skipif`` mark to the tests below.
-pytestmark = pytest.mark.skipif(skip_this_module(), reason='No accessible test chain.')
-
-
-# These structs must match the struct in tests/contracts/hash_test_contract.sol
+# These structs must match the struct in tests/integration/contract_sources/contract.sol
 class Bar(EIP712Struct):
     bar_uint = Uint(256)
 
@@ -101,12 +55,11 @@ def test_encoded_types(contract):
 
 def test_chain_hash_matches(contract):
     """Assert that the hashes we derive locally match the hashes derived on-chain."""
-
     # Initialize basic values
-    s = 'some string'
+    s = "some string"
     u_i = 1234
     s_i = -7
-    a = Web3.toChecksumAddress(f'0x{os.urandom(20).hex()}')
+    a = Web3.to_checksum_address(f"0x{os.urandom(20).hex()}")
     b = True
     bytes_30 = os.urandom(30)
     dyn_bytes = os.urandom(50)
