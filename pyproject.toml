@@ -41,9 +41,6 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/BoboTiG/py-eip712-structs-ng"
-Documentation = "https://github.com/BoboTiG/py-eip712-structs-ng/blob/main/API.md"
-Changelog = "https://github.com/BoboTiG/py-eip712-structs-ng/blob/main/CHANGELOG.md"
 Source = "https://github.com/BoboTiG/py-eip712-structs-ng"
 Tracker = "https://github.com/BoboTiG/py-eip712-structs-ng/issues"
 "Released Versions" = "https://github.com/BoboTiG/py-eip712-structs-ng/releases"
