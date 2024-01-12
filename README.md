@@ -17,7 +17,7 @@ A Python interface for [EIP-712](https://github.com/ethereum/EIPs/blob/master/EI
 In this module, a "struct" is structured data as defined in the standard.
 It is not the same as the Python standard library's [struct](https://docs.python.org/3/library/struct.html).
 
-#### Supported Python Versions
+## Supported Python Versions
 
 Python 3.8 and newer.
 
@@ -33,7 +33,7 @@ See [API.md](API.md) for a succinct summary of available methods.
 
 Examples & details below.
 
-#### Quickstart
+## Quickstart
 
 Say we want to represent the following struct, convert it to a message and sign it:
 
@@ -79,7 +79,7 @@ my_bytes = mine.signable_bytes(domain)
 
 See [Member Types](#member-types) for more information on supported types.
 
-#### Dynamic construction
+### Dynamic Construction
 
 Attributes may be added dynamically as well.
 This may be necessary if you want to use a reserved keyword like `from`:
@@ -97,7 +97,7 @@ setattr(Message, "from", Address())
 # At this point, `Message` is equivalent to `struct Message { address to; address from; }`
 ```
 
-#### The domain separator
+### The Domain Separator
 
 EIP-712 specifies a domain struct, to differentiate between identical structs that may be unrelated.
 A helper method exists for this purpose.
@@ -110,7 +110,7 @@ The full signature:
 make_domain(name: string, version: string, chainId: uint256, verifyingContract: address, salt: bytes32)
 ```
 
-##### Setting a default domain
+#### Setting a Default Domain
 
 Constantly providing the same domain can be cumbersome. You can optionally set a default, and then forget it.
 It is automatically used by `.to_message()` and `.signable_bytes()`:
@@ -130,7 +130,7 @@ assert foo.signable_bytes() == foo.signable_bytes(my_domain)
 
 ## Member Types
 
-### Basic types
+### Basic Types
 
 EIP712's basic types map directly to solidity types:
 
@@ -159,7 +159,7 @@ class Foo(EIP712Struct):
     # etc.
 ```
 
-### Struct references
+### Struct References
 
 In addition to holding basic types, EIP-712 structs may also hold other structs!
 Usage is almost the same - the difference is you don't "instantiate" the class.
@@ -251,6 +251,16 @@ Run linters before submitting a PR:
 ./checks.sh
 ```
 
+### Solidity Contract
+
+When changing the code of the Solidity test contract, you will have to regenerate its Python data code:
+
+```shell
+cd src/tests/integration/contract_sources && ./compile.sh
+```
+
+That's it! Do not forget to commit those changes.
+
 ## Deploying a New Version
 
 - Bump the version number in `__init__.py`, commit it into the `main` branch.
@@ -259,4 +269,4 @@ Run linters before submitting a PR:
 
 ## Shameless Plug
 
-Originally written by [ConsenSys](https://consensys.net) for the world! And continued by @BoboTiG! :heart:
+Originally written by [ConsenSys](https://consensys.net) for the world! And continued by [BoboTiG](https://github.com/BoboTiG)! :heart:
