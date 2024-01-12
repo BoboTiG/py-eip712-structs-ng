@@ -11,7 +11,8 @@ A Python interface for [EIP-712](https://github.com/ethereum/EIPs/blob/master/EI
 > - code modernization, including Sourcery clean-up
 > - 99% tests coverage
 > - simplified testing (no more need for docker)
-> - fixes ConsenSysMesh/py-eip712-structs#19
+
+> **Warning**: Remove any installation of the old `eip712-structs` module to prevent import mismatches: `python -m pip uninstall -y eip712-structs`
 
 In this module, a "struct" is structured data as defined in the standard.
 It is not the same as the Python standard library's [struct](https://docs.python.org/3/library/struct.html).
