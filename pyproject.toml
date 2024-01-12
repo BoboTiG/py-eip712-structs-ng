@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "eip712-structs-ng"
-description = "A Python library for EIP712 objects."
+description = "A Python interface for EIP-712 struct construction."
 readme = "README.md"
 requires-python = ">= 3.8"
 authors = [
