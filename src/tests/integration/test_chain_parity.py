@@ -24,8 +24,17 @@ class Foo(EIP712Struct):
 
 def get_chain_hash(contract, s, u_i, s_i, a, b, bytes_30, dyn_bytes, bar_uint, arr) -> bytes:
     """Uses the contract to create and hash a Foo struct with the given parameters."""
-    result = contract.functions.hashFooStructFromParams(s, u_i, s_i, a, b, bytes_30, dyn_bytes, bar_uint, arr).call()
-    return result
+    return contract.functions.hashFooStructFromParams(
+        s,
+        u_i,
+        s_i,
+        a,
+        b,
+        bytes_30,
+        dyn_bytes,
+        bar_uint,
+        arr,
+    ).call()
 
 
 def test_encoded_types(contract):

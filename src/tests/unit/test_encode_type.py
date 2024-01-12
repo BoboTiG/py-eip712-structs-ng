@@ -61,6 +61,7 @@ def test_nested_reference():
 
 def test_reference_ordering():
     # The "main" struct is always first. Then the rest are ordered alphabetically.
+
     class B(EIP712Struct):
         s = String()
 
@@ -79,7 +80,7 @@ def test_reference_ordering():
         s = String()
         a = A
 
-    expected_result = "Z(string s,A a)" + expected_result
+    expected_result = f"Z(string s,A a){expected_result}"
     assert Z.encode_type() == expected_result
 
 

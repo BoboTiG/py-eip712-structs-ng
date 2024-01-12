@@ -238,11 +238,11 @@ class EIP712Struct(EIP712Type, metaclass=OrderedAttributesMeta):
             struct_class = structs[struct_name]
             for name, type_name in unfulfilled_member_names:
                 if match := re.match(regex_pattern, type_name):
-                    base_type_name = match.group(1)
+                    base_type_name = match[1]
                     ref_struct = structs[base_type_name]
-                    if match.group(2):
+                    if match[2]:
                         # The type is an array of the struct
-                        arr_len = match.group(3) or 0  # length of 0 means the array is dynamically sized
+                        arr_len = match[3] or 0  # length of 0 means the array is dynamically sized
                         setattr(struct_class, name, Array(ref_struct, fixed_length=int(arr_len)))
                     else:
                         setattr(struct_class, name, ref_struct)
@@ -268,7 +268,7 @@ class EIP712Struct(EIP712Type, metaclass=OrderedAttributesMeta):
 
         if isinstance(kind, type) and issubclass(kind, EIP712Struct):
             # We expect an EIP712Struct instance. Assert that's true, and check the struct signature too.
-            if isinstance(value, EIP712Struct):
+            if isinstance(value, EIP712Struct):  # sourcery skip: merge-nested-ifs
                 if value.encode_type(resolve=False) == kind.encode_type(resolve=False):  # type: ignore[attr-defined]
                     return
             raise ValueError(f"Given value is of type {type(value)}, but we expected {kind}")

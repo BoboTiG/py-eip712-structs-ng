@@ -211,10 +211,10 @@ def from_solidity_type(solidity_type: str) -> EIP712Type | None:
     if match is None:
         return None
 
-    type_name = match.group(1)  # The type name, like the "bytes" in "bytes32"
-    opt_len = match.group(2)  # An optional length spec, like the "32" in "bytes32"
-    is_array = match.group(3)  # Basically just checks for square brackets
-    array_len = match.group(4)  # For fixed length arrays only, this is the length
+    type_name = match[1]  # The type name, like the "bytes" in "bytes32"
+    opt_len = match[2]  # An optional length spec, like the "32" in "bytes32"
+    is_array = match[3]  # Basically just checks for square brackets
+    array_len = match[4]  # For fixed length arrays only, this is the length
 
     if type_name not in solidity_type_map:
         # Only supporting basic types here - return None if we don't recognize it.
@@ -233,7 +233,4 @@ def from_solidity_type(solidity_type: str) -> EIP712Type | None:
 
 class BytesJSONEncoder(JSONEncoder):
     def default(self, o: object) -> str:
-        if isinstance(o, bytes):
-            return to_hex(o)
-
-        return super().default(o)
+        return to_hex(o) if isinstance(o, bytes) else super().default(o)

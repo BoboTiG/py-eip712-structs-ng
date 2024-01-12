@@ -31,38 +31,35 @@ def test_encode_basic_types():
         uint_32 = Uint(32)
         uint_256 = Uint(256)
 
-    values = {}
-    values["address"] = os.urandom(20)
-    values["boolean"] = False
-    values["dyn_bytes"] = os.urandom(random.choice(range(33, 100)))
-    values["bytes_1"] = os.urandom(1)
-    values["bytes_32"] = os.urandom(32)
-    values["int_32"] = random.randint(*signed_min_max(32))
-    values["int_256"] = random.randint(*signed_min_max(256))
-    values["string"] = "".join([random.choice(string.ascii_letters) for _ in range(100)])
-    values["uint_32"] = random.randint(0, unsigned_max(32))
-    values["uint_256"] = random.randint(0, unsigned_max(256))
+    values = {
+        "address": os.urandom(20),
+        "boolean": False,
+        "dyn_bytes": os.urandom(random.choice(range(33, 100))),
+        "bytes_1": os.urandom(1),
+        "bytes_32": os.urandom(32),
+        "int_32": random.randint(*signed_min_max(32)),
+        "int_256": random.randint(*signed_min_max(256)),
+        "string": "".join([random.choice(string.ascii_letters) for _ in range(100)]),
+        "uint_32": random.randint(0, unsigned_max(32)),
+        "uint_256": random.randint(0, unsigned_max(256)),
+    }
 
-    expected_data = []
-    expected_data.append(bytes(12) + values["address"])
-    expected_data.append(bytes(32))
-    expected_data.append(keccak(values["dyn_bytes"]))
-    expected_data.append(values["bytes_1"] + bytes(31))
-    expected_data.append(values["bytes_32"])
-    expected_data.append(values["int_32"].to_bytes(32, byteorder="big", signed=True))
-    expected_data.append(values["int_256"].to_bytes(32, byteorder="big", signed=True))
-    expected_data.append(keccak(text=values["string"]))
-    expected_data.append(values["uint_32"].to_bytes(32, byteorder="big", signed=False))
-    expected_data.append(values["uint_256"].to_bytes(32, byteorder="big", signed=False))
+    expected_data = [
+        bytes(12) + values["address"],
+        bytes(32),
+        keccak(values["dyn_bytes"]),
+        values["bytes_1"] + bytes(31),
+        values["bytes_32"],
+        values["int_32"].to_bytes(32, byteorder="big", signed=True),
+        values["int_256"].to_bytes(32, byteorder="big", signed=True),
+        keccak(text=values["string"]),
+        values["uint_32"].to_bytes(32, byteorder="big", signed=False),
+        values["uint_256"].to_bytes(32, byteorder="big", signed=False),
+    ]
 
     s = TestStruct(**values)
     encoded_data = s.encode_value()
-    encoded_bytes = list()
-
-    # Compare each byte range itself to find offenders
-    for i in range(0, len(encoded_data), 32):
-        encoded_bytes.append(encoded_data[i : i + 32])
-
+    encoded_bytes = [encoded_data[i : i + 32] for i in range(0, len(encoded_data), 32)]
     assert encoded_bytes == expected_data
 
 
@@ -142,7 +139,7 @@ def test_signable_bytes():
     exp_struct_bytes = keccak(foo.type_hash() + foo.encode_value())
 
     sign_bytes = foo.signable_bytes(domain)
-    assert sign_bytes[0:2] == start_bytes
+    assert sign_bytes[:2] == start_bytes
     assert sign_bytes[2:34] == exp_domain_bytes
     assert sign_bytes[34:] == exp_struct_bytes
 
@@ -157,7 +154,7 @@ def test_none_replacement():
     assert len(encoded_val) == 64
 
     empty_string_hash = keccak(text="")
-    assert encoded_val[0:32] == empty_string_hash
+    assert encoded_val[:32] == empty_string_hash
     assert encoded_val[32:] == bytes(32)
 
 
