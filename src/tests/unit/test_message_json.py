@@ -2,7 +2,7 @@ import json
 import os
 
 import pytest
-from eip712_structs import Bytes, EIP712Struct, String, make_domain
+from eip712_structs import Array, Bytes, EIP712Struct, String, make_domain
 
 
 def test_flat_struct_to_message():
@@ -151,3 +151,25 @@ def test_bytes_json_encoder():
     foo.values["b"] = obj
     with pytest.raises(TypeError, match="not JSON serializable"):
         foo.to_message_json(domain)
+
+
+def test_array_to_message():
+    class TestStruct(EIP712Struct):
+        byte_array = Array(Bytes(32), 4)
+
+    byte_array = [os.urandom(32) for _ in range(4)]
+
+    domain = make_domain(name="hello")
+    s = TestStruct(byte_array=byte_array)
+
+    msg = s.to_message(domain)
+    assert msg["primaryType"] == "TestStruct"
+    assert msg["types"] == {
+        "EIP712Domain": [{"name": "name", "type": "string"}],
+        "TestStruct": [{"name": "byte_array", "type": "bytes32[4]"}],
+    }
+    assert msg["domain"] == {"name": "hello"}
+    assert msg["message"]["byte_array"]
+    assert isinstance(msg["message"]["byte_array"], list)
+    assert isinstance(msg["message"]["byte_array"][0], bytes)
+    assert isinstance(msg["message"]["byte_array"][-1], bytes)

@@ -83,7 +83,14 @@ class EIP712Struct(EIP712Type, metaclass=OrderedAttributesMeta):
 
         Nested structs instances are also converted to dict form.
         """
-        return {k: v.data_dict() if isinstance(v, EIP712Struct) else v for k, v in self.values.items()}
+        return {
+            k: v.data_dict()
+            if isinstance(v, EIP712Struct)
+            else [e.data_dict() for e in v]
+            if isinstance(v, list) and len(v) and isinstance(v[0], EIP712Struct)
+            else v
+            for k, v in self.values.items()
+        }
 
     @classmethod
     def encode_type(cls, resolve: bool = True) -> str:
@@ -95,7 +102,7 @@ class EIP712Struct(EIP712Type, metaclass=OrderedAttributesMeta):
         struct_sig = f"{cls.type_name}({','.join(member_sigs)})"
 
         if resolve:
-            reference_structs: set[EIP712Struct] = set()
+            reference_structs: list[EIP712Struct] = []
             cls.gather_reference_structs(reference_structs)
             sorted_structs = sorted((s for s in reference_structs if s != cls), key=lambda s: s.type_name)
             for struct in sorted_structs:
@@ -104,15 +111,17 @@ class EIP712Struct(EIP712Type, metaclass=OrderedAttributesMeta):
         return struct_sig
 
     @classmethod
-    def gather_reference_structs(cls, struct_set: set[EIP712Struct]) -> None:
+    def gather_reference_structs(cls, struct_lst: list[EIP712Struct]) -> None:
         """Finds reference structs defined in this struct type, and inserts them into the given set."""
-        structs: list[EIP712Struct] = [
-            m[1] for m in cls.get_members() if isinstance(m[1], type) and issubclass(m[1], EIP712Struct)
+        structs = [m[1] for m in cls.get_members() if isinstance(m[1], type) and issubclass(m[1], EIP712Struct)] + [
+            m[1].member_type
+            for m in cls.get_members()
+            if isinstance(m[1], Array) and hasattr(m[1].member_type, "encode_type")
         ]
         for struct in structs:
-            if struct not in struct_set:
-                struct_set.add(struct)
-                struct.gather_reference_structs(struct_set)
+            if struct not in struct_lst:
+                struct_lst.append(struct)  # type: ignore[arg-type]
+                struct.gather_reference_structs(struct_lst)  # type: ignore[union-attr]
 
     @classmethod
     def type_hash(cls) -> bytes:
@@ -159,7 +168,7 @@ class EIP712Struct(EIP712Type, metaclass=OrderedAttributesMeta):
         :returns: This struct + the domain in dict form, structured as specified for EIP712 messages.
         """
         domain = self._assert_domain(domain)
-        structs = {domain, self}
+        structs = [domain, self]
         self.gather_reference_structs(structs)
 
         # Build type dictionary
