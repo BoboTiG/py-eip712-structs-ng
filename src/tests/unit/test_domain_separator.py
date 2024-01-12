@@ -56,6 +56,7 @@ def test_default_domain(default_domain_manager):
         s = String()
 
     foo = Foo(s="hello world")
+    assert hash(foo)
 
     domain = make_domain(name="domain")
     other_domain = make_domain(name="other domain")

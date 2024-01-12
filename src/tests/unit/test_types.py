@@ -84,3 +84,6 @@ def test_from_solidity_type():
     assert from_solidity_type("bytes16[32]") != Array(Bytes(16), 31)
     assert from_solidity_type("bytes16[32]") != Array(Bytes(), 32)
     assert from_solidity_type("bytes16[32]") != Array(Bytes(8), 32)
+
+    # Check for unknow type
+    assert from_solidity_type("unknown") is None
