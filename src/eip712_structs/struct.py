@@ -5,7 +5,7 @@ import json
 import operator
 import re
 from collections import OrderedDict, defaultdict
-from collections.abc import Mapping
+from collections.abc import MutableMapping
 from typing import Any, NamedTuple
 
 from eth_utils.crypto import keccak
@@ -18,7 +18,7 @@ class OrderedAttributesMeta(type):
     """Metaclass to ensure struct attribute order is preserved."""
 
     @classmethod
-    def __prepare__(cls, name: str, bases: tuple[type, ...], /, **kwargs: Any) -> Mapping[str, object]:
+    def __prepare__(cls, name: str, bases: tuple[type, ...], /, **kwargs: Any) -> MutableMapping[str, object]:
         return OrderedDict()
 
 
