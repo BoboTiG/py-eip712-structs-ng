@@ -49,7 +49,7 @@ Tracker = "https://github.com/BoboTiG/py-eip712-structs-ng/issues"
 tests = [
   "eth-tester==0.10.0b1",
   "mypy",
-  "py-evm==0.8.0b1",
+  "py-evm==0.10.1b1",
   "py-solc-x==2.0.3",
   "pytest",
   "pytest-cov",
