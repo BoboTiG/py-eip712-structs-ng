@@ -2,6 +2,7 @@
 Copied from web3.py/web3/_utils/contract_sources
 + custom changes (like optimizations to bypass contract code size over limit)
 """
+
 import argparse
 import contextlib
 import os
