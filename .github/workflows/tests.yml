@@ -46,12 +46,10 @@ jobs:
             runs-on: "3.10"
           - name: CPython 3.11
             runs-on: "3.11"
-          # Following are disabled because of https://github.com/ethereum/eth-tester/issues/276
-          # - name: CPython 3.12
-          #   runs-on: "3.12"
-          # Waaaay to soon for 3.13
-          # - name: CPython 3.13-dev
-          #   runs-on: "3.13-dev"
+          - name: CPython 3.12
+            runs-on: "3.12"
+          - name: CPython 3.13-dev
+            runs-on: "3.13-dev"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
