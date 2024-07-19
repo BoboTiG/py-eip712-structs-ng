@@ -22,8 +22,6 @@ classifiers = [
   "License :: OSI Approved :: MIT License",
   "Programming Language :: Python :: Implementation :: CPython",
   "Programming Language :: Python",
-  "Programming Language :: Python :: 3",
-  "Programming Language :: Python :: 3 :: Only",
   "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
@@ -32,13 +30,13 @@ classifiers = [
   # "Programming Language :: Python :: 3.13",
 ]
 keywords = [
-    "ethereum",
-    "eip712",
-    "solidity",
+  "ethereum",
+  "eip712",
+  "solidity",
 ]
 dynamic = ["version"]
 dependencies = [
-    "eth-utils>=4.1.1,<5",
+  "eth-utils>=4.1.1,<5",
 ]
 
 [project.urls]
@@ -48,9 +46,8 @@ Tracker = "https://github.com/BoboTiG/py-eip712-structs-ng/issues"
 
 [project.optional-dependencies]
 tests = [
-  "eth-tester==0.12.0b1",
+  "eth-tester[py-evm]==0.12.0b1",
   "mypy==1.10.1",
-  "py-evm==0.10.1b1",
   "py-solc-x==2.0.3",
   "pytest==8.2.2",
   "pytest-cov==5.0.0",
@@ -114,11 +111,11 @@ addopts = """
 
 [tool.ruff]
 exclude = [
-    ".git",
-    ".mypy_cache",
-    ".pytest_cache",
-    ".ruff_cache",
-    "venv",
+  ".git",
+  ".mypy_cache",
+  ".pytest_cache",
+  ".ruff_cache",
+  "venv",
 ]
 line-length = 120
 indent-width = 4
