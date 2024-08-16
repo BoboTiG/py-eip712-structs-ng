@@ -36,7 +36,7 @@ keywords = [
 ]
 dynamic = ["version"]
 dependencies = [
-  "eth-utils>=2.0.0,<6",
+  "eth-utils",
 ]
 
 [project.urls]
