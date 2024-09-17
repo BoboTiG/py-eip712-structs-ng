@@ -54,7 +54,7 @@ tests = [
   "requests==2.32.3",
   "ruff==0.6.5",
   "setuptools==74.1.2",
-  "web3==6.3.0",
+  "web3==7.2.0",
 ]
 dev = [
   "build==1.2.2",
