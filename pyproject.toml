@@ -53,7 +53,7 @@ tests = [
   "pytest-cov==5.0.0",
   "requests==2.32.3",
   "ruff==0.7.1",
-  "setuptools==75.2.0",
+  "setuptools==75.3.0",
   "web3==7.4.0",
 ]
 dev = [
