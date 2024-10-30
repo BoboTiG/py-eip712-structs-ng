@@ -6,7 +6,7 @@ build-backend = "hatchling.build"
 name = "eip712-structs-ng"
 description = "A Python interface for EIP-712 struct construction."
 readme = "README.md"
-requires-python = ">= 3.8"
+requires-python = ">= 3.9"
 authors = [
   { name = "AJ Grubbs" },
   { name = "Mickaël Schoentgen", email="contact@tiger-222.fr" },
@@ -22,7 +22,6 @@ classifiers = [
   "License :: OSI Approved :: MIT License",
   "Programming Language :: Python :: Implementation :: CPython",
   "Programming Language :: Python",
-  "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
@@ -119,7 +118,7 @@ exclude = [
 ]
 line-length = 120
 indent-width = 4
-target-version = "py38"
+target-version = "py39"
 
 [tool.ruff.lint]
 extend-select = ["I"]
