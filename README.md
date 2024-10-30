@@ -10,7 +10,7 @@ A Python interface for [EIP-712](https://github.com/ethereum/EIPs/blob/master/EI
 > It brings the same objects as its predecessor with some sugar:
 > - the code is fully typed
 > - dependencies were cleaned up
-> - support for Python 3.8 and newer
+> - support for Python 3.9 and newer
 > - code modernization, including Sourcery clean-up
 > - 99% tests coverage
 > - simplified testing (no more need for docker)
@@ -22,7 +22,7 @@ It is not the same as the Python standard library's [struct](https://docs.python
 
 ## Supported Python Versions
 
-Python 3.8 and newer.
+Python 3.9 and newer.
 
 ## Install
 
