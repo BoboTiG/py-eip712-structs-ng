@@ -3,6 +3,8 @@
 [![PyPI version](https://badge.fury.io/py/eip712-structs-ng.svg)](https://badge.fury.io/py/eip712-structs-ng)
 [![Python versions](https://img.shields.io/pypi/pyversions/eip712-structs-ng.svg)](https://pypi.python.org/pypi/eip712-structs-ng)
 
+[![Patreon](https://img.shields.io/badge/Patreon-F96854?style=for-the-badge&logo=patreon&logoColor=white)](https://www.patreon.com/mschoentgen)
+
 A Python interface for [EIP-712](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-712.md) struct construction.
 
 > Note: this is a **drop-in replacement** for the [eip712-structs](https://pypi.org/project/eip712-structs/) module, which is dead since 2019.
