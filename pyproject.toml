@@ -109,22 +109,15 @@ addopts = """
 """
 
 [tool.ruff]
-exclude = [
-  ".git",
-  ".mypy_cache",
-  ".pytest_cache",
-  ".ruff_cache",
-  "venv",
-]
 line-length = 120
 indent-width = 4
 target-version = "py39"
-
-[tool.ruff.lint]
-extend-select = ["I"]
 
 [tool.ruff.format]
 quote-style = "double"
 indent-style = "space"
 skip-magic-trailing-comma = false
 line-ending = "auto"
+
+[tool.ruff.lint]
+extend-select = ["I"]
