@@ -49,7 +49,7 @@ tests = [
   "mypy==1.15.0",
   "py-solc-x==2.0.3",
   "pytest==8.3.5",
-  "pytest-cov==6.1.0",
+  "pytest-cov==6.1.1",
   "requests==2.32.3",
   "ruff==0.11.4",
   "setuptools==78.1.0",
