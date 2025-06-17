@@ -278,7 +278,7 @@ class EIP712Struct(EIP712Type, metaclass=OrderedAttributesMeta):
         if isinstance(kind, type) and issubclass(kind, EIP712Struct):
             # We expect an EIP712Struct instance. Assert that's true, and check the struct signature too.
             if isinstance(value, EIP712Struct):  # sourcery skip: merge-nested-ifs
-                if value.encode_type(resolve=False) == kind.encode_type(resolve=False):  # type: ignore[attr-defined]
+                if value.encode_type(resolve=False) == kind.encode_type(resolve=False):
                     return
             raise ValueError(f"Given value is of type {type(value)}, but we expected {kind}")
         else:
