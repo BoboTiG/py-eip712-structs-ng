@@ -48,7 +48,7 @@ class Array(EIP712Type):
             a3 = Array(MyStruct)     # MyStruct[] a3
         """
         fixed_length = int(fixed_length)
-        type_name = f"{member_type.type_name}[{fixed_length or ''}]"
+        type_name = f"{member_type.type_name}[{fixed_length or ''}]"  # type: ignore[misc]
         self.member_type = member_type
         self.fixed_length = fixed_length
         super().__init__(type_name, [])
@@ -222,7 +222,7 @@ def from_solidity_type(solidity_type: str) -> EIP712Type | None:
 
     # Construct the basic type
     base_type = solidity_type_map[type_name]
-    type_instance = base_type(int(opt_len)) if opt_len else base_type()
+    type_instance = base_type(int(opt_len)) if opt_len else base_type()  # type: ignore[call-arg]
 
     if is_array:
         # Nest the aforementioned basic type into an Array.

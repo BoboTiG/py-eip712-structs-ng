@@ -6,7 +6,7 @@ build-backend = "hatchling.build"
 name = "eip712-structs-ng"
 description = "A Python interface for EIP-712 struct construction."
 readme = "README.md"
-requires-python = ">= 3.9"
+requires-python = ">= 3.10"
 authors = [
   { name = "AJ Grubbs" },
   { name = "Mickaël Schoentgen", email="contact@tiger-222.fr" },
@@ -22,7 +22,6 @@ classifiers = [
   "License :: OSI Approved :: MIT License",
   "Programming Language :: Python :: Implementation :: CPython",
   "Programming Language :: Python",
-  "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
@@ -47,17 +46,17 @@ Tracker = "https://github.com/BoboTiG/py-eip712-structs-ng/issues"
 [project.optional-dependencies]
 tests = [
   "eth-tester[py-evm]==0.13.0b1",
-  "mypy==1.19.1",
+  "mypy==2.3.0",
   "py-solc-x==2.0.5",
-  "pytest==8.4.2",
+  "pytest==9.1.1",
   "pytest-cov==7.1.0",
-  "requests==2.32.5",
+  "requests==2.34.2",
   "ruff==0.15.21",
-  "setuptools==82.0.1",
+  "setuptools==83.0.0",
   "web3==7.16.0",
 ]
 dev = [
-  "build==1.5.0",
+  "build==1.5.1",
   "twine==6.2.0",
 ]
 
@@ -112,7 +111,7 @@ addopts = """
 [tool.ruff]
 line-length = 120
 indent-width = 4
-target-version = "py39"
+target-version = "py310"
 
 [tool.ruff.format]
 quote-style = "double"

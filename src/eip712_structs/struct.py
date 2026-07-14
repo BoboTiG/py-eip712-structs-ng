@@ -99,7 +99,7 @@ class EIP712Struct(EIP712Type, metaclass=OrderedAttributesMeta):
         Nested structs are also encoded if ``resolve`` is ``True``, and appended in alphabetical order.
         """
         member_sigs = [f"{typ.type_name} {name}" for name, typ in cls.get_members()]
-        struct_sig = f"{cls.type_name}({','.join(member_sigs)})"
+        struct_sig = f"{cls.type_name}({','.join(member_sigs)})"  # type: ignore[misc]
 
         if resolve:
             reference_structs: list[EIP712Struct] = []
