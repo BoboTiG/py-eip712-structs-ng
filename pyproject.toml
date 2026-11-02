@@ -48,7 +48,7 @@ tests = [
   "eth-tester[py-evm]==0.14.0b1",
   "mypy==2.4.0",
   "py-solc-x==2.0.5",
-  "pytest==9.1.1",
+  "pytest==9.2.0",
   "pytest-cov==7.1.0",
   "requests==2.34.2",
   "ruff==0.15.22",
